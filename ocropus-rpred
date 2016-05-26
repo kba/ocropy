@@ -189,7 +189,7 @@ def process1(arg):
         alts = lstm.translate_back_with_probabilities(network.outputs)
         chars = [[(network.l2s([c]), score) for c, score in char if c > 0]
                     for char in alts]
-        with codecs.open(base+".prob","w") as locs:
+        with codecs.open(base+".prob","w", "utf-8") as locs:
 		for char in alts:
 			for p,s in char:
 				l = network.l2s([p])
