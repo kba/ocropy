@@ -11,13 +11,13 @@ import re
 import sys
 import sysconfig
 import unicodedata
-import warnings
 import inspect
 import glob
 import cPickle
 
 import numpy
-from numpy import *
+from numpy import (amax, amin, array, bitwise_and, clip, dtype, mean, minimum,
+                   nan, sin, sqrt, zeros)
 import pylab
 from pylab import imshow
 from scipy.ndimage import morphology,measurements
