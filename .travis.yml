@@ -25,11 +25,9 @@ install:
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
 
-  # Customise the testing environment
+  # Install the requirements
   # ---------------------------------
-  # NOTE: conda uses pytables whereas PyPI calls it tables. If they were the
-  # same name, we could just use: conda install --file requirements.txt
-  - cat requirements_1.txt requirements_2.txt | sed -e 's/tables/pytables/g' | xargs conda install
+  - conda install --file requirements.txt
 
   # Conda debug
   #-----------
