@@ -13,34 +13,29 @@ import sysconfig
 import unicodedata
 import inspect
 import glob
+import pickle
 import cPickle
-<<<<<<< HEAD
-=======
 from ocrolib.exceptions import (BadClassLabel, BadInput, FileNotFound,
                                 OcropusException)
->>>>>>> db719a2... common.py: Remove draw_pseg/draw_aligned functions
 
 import numpy
 from numpy import (amax, amin, array, bitwise_and, clip, dtype, mean, minimum,
                    nan, sin, sqrt, zeros)
 import pylab
-<<<<<<< HEAD
-from pylab import imshow
-from scipy.ndimage import morphology,measurements
-=======
 from pylab import (clf, cm, ginput, gray, imshow, ion, subplot, where)
 from scipy.ndimage import morphology, measurements
->>>>>>> db719a2... common.py: Remove draw_pseg/draw_aligned functions
 import PIL
 
 from default import getlocal
-from toplevel import *
+from toplevel import (checks, ABINARY2, AINT2, AINT3, BOOL, DARKSEG, GRAYSCALE,
+                      LIGHTSEG, LINESEG, PAGESEG)
 import chars
 import codecs
 import ligatures
 import lstm
 import morph
 import multiprocessing
+import sl
 
 ################################################################
 ### exceptions
@@ -465,10 +460,10 @@ class RegionExtractor:
         mh,mw = mask.shape
         box = self.bbox(index)
         r0,c0,r1,c1 = box
-        subimage = improc.cut(image,(r0,c0,r0+mh-2*margin,c0+mw-2*margin),margin,bg=bg)
+        subimage = sl.cut(image,(r0,c0,r0+mh-2*margin,c0+mw-2*margin),margin,bg=bg)
         return where(mask,subimage,bg)
 
-
+
 
 ################################################################
 ### Object reading and writing
@@ -516,7 +511,7 @@ def load_object(fname,zip=0,nofind=0,verbose=0):
             unpickler.find_global = unpickle_find_global
             return unpickler.load()
 
-
+
 
 ################################################################
 ### Simple record object.
@@ -905,13 +900,13 @@ def showrgb(r,g=None,b=None):
     imshow(array([r,g,b]).transpose([1,2,0]))
 
 def showgrid(l,cols=None,n=400,titles=None,xlabels=None,ylabels=None,**kw):
-    if "cmap" not in kw: kw["cmap"] = pylab.cm.gray
+    if "cmap" not in kw: kw["cmap"] = cm.gray
     if "interpolation" not in kw: kw["interpolation"] = "nearest"
     n = minimum(n,len(l))
     if cols is None: cols = int(sqrt(n))
     rows = (n+cols-1)//cols
     for i in range(n):
-        pylab.xticks([]); pylab.yticks([])
+        pylab.xticks([]) ;pylab.yticks([])
         pylab.subplot(rows,cols,i+1)
         pylab.imshow(l[i],**kw)
         if titles is not None: pylab.title(str(titles[i]))
