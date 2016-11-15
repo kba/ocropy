@@ -1,0 +1,8 @@
+#!/usr/bin/env tsht
+test_ocropus () {
+    script="$(which "ocropus-$1")"
+    shift
+    exec_ok "$script" "$@"
+}
+TEMPDIR=$(mktemp -d --tmpdir 'ocropy-test-XXXXXXXX')
+TESTDATA=$(cd "$TSHTLIB/../data";pwd)

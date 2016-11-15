@@ -1,0 +1,22 @@
+#!/usr/bin/env tsht
+
+. ../.before
+
+use colordiff
+
+HOCR=$TEMPDIR/hocr.html
+CORR=$TEMPDIR/correction.html
+
+test_ocropus nlbin "$TESTDATA/testpage.png" -o "$TEMPDIR"
+test_ocropus gpageseg "$TEMPDIR/????.bin.png"
+test_ocropus rpred -n "$TEMPDIR/????/??????.bin.png"
+test_ocropus hocr "$TEMPDIR/????.bin.png" -o "$HOCR"
+test_ocropus visualize-results "$TEMPDIR"
+equals_file_file "$HOCR" expected/correction.html
+test_ocropus gtedit html "$TEMPDIR/????/??????.bin.png" -o "$CORR"
+equals_file_file "$CORR" expected/correction.html
+rm -f "$HOCR" "$CORR"
+
+# echo "#     to see recognition results, type: firefox "$TEMPDIR".html"
+# echo "#     to see correction page, type: firefox "$TEMPDIR"-correction.html"
+# echo "#     to see details on the recognition process, type: firefox "$TEMPDIR"/index.html"

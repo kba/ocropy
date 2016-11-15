@@ -1,0 +1,9 @@
+#!/usr/bin/env tsht
+
+TESTIMAGE=0079-01000d
+mkdir -p temp
+cp "testdata/$TESTIMAGE"* temp
+exec_ok ocropus rpred temp/$TESTIMAGE.png
+exec_ok ocropus errs  temp/$TESTIMAGE.gt.txt
+exec_ok ocropus econf temp/$TESTIMAGE.gt.txt
+rm -r temp

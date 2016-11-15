@@ -1,0 +1,3 @@
+#!/usr/bin/env tsht
+rm -rv $TEMPDIR
+
